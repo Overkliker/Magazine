@@ -1,37 +1,43 @@
-﻿using System;
+﻿using Magazine;
+using System;
 using System.Diagnostics;
+using Newtonsoft.Json;
+using System.IO;
 
-namespace ScorePech
+namespace Magazine
 {
     public class Program
     {
 
         static void Main(string[] argrs)
         {
-            /*while (true)
-            {
-                Console.WriteLine("Выберите под каким пользователем вы хотите зайти:\n" +
-                    "1 - Администратор; 2 - Менеджер персонала; 3 - Склад-менеджер; 4 - Кассир; 5 - Бухгалтер");
-                int userInSpase = Convert.ToInt32(Console.ReadLine());
-            }*/
-            string password = "НИКИТА1257", inpt = string.Empty;
-            while (password != inpt)
-            {
-                Console.Write("Введите пароль для работы с файлами Windows: ");
-                inpt = string.Empty;
-                while (true)
-                {
-                    var key = Console.ReadKey(true);//не отображаем клавишу - true
+            List<ModelOfWorker> con;
 
-                    if (key.Key == ConsoleKey.Enter) break; //enter - выходим из цикла
+            using (StreamReader read = new StreamReader("C:\\Users\\Overkliker\\source\\repos\\Magazine\\usersData.json"))
+            {
+                string a = read.ReadToEnd();
+                con = JsonConvert.DeserializeObject<List<ModelOfWorker>>(a);
 
-                    Console.Write("*");//рисуем звезду вместо нее
-                    inpt += key.KeyChar; //копим в пароль символы
-                }
-                Console.WriteLine();
             }
-            Console.Write("Допуск получен!");
-            Console.ReadKey();
+
+            List<(string, string)> logins = new List<(string, string)>();
+            for (int i = 0; i < con.Count; i++)
+            {
+                logins.Add((con[i].name, con[i].password));
+            }
+
+            int ind = Autorize.Aut(logins);
+            ModelOfWorker worker = con[ind];
+
+            switch (worker.atribute)
+            {
+                case 1:
+                    Console.Clear();
+                    Admin admin =  new Admin(worker);
+                    admin.Interface();
+                    break;
+            }
+
         }
     }
 }

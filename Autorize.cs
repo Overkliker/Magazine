@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Magazine
 {
@@ -10,12 +11,12 @@ namespace Magazine
     {
         public static int user;
 
-        public static void PasswordInput(string pass)
+        public static (string, string, bool) PasswordInput(string name, List<(string, string)> workers)
         {
-            /*string password = pass, inpt = string.Empty;
-            while (password != inpt)
+            string inpt = string.Empty;
+            while (!workers.Contains((name, inpt)))
             {
-                Console.Write("Введите пароль для работы с файлами Windows: ");
+                Console.Write("Введите пароль: ");
                 inpt = string.Empty;
                 while (true)
                 {
@@ -26,33 +27,44 @@ namespace Magazine
                     Console.Write("*");//рисуем звезду вместо нее
                     inpt += key.KeyChar; //копим в пароль символы
                 }
+                
+                if (!workers.Contains((name, inpt)))
+                {
+                    Console.WriteLine("Написал хуйню какую-то");
+                    break;
+                }
                 Console.WriteLine();
-            }*/
-        }
-        public static void AdminAut()
-        {
-            Console.WriteLine();
-            string name= Console.ReadLine();
-            string password = Console.ReadLine();
+            }
+            if (!workers.Contains((name, inpt)))
+            {
+                return (name, inpt, false);
+            }
+            else
+            {
+                return (name, inpt, true);
+            }
 
         }
 
-        public static void AccountentAut()
+        public static int Aut(List<(string, string)> workers)
         {
+            while (true)
+            {
+                Console.WriteLine("Введите имя");
+                string name= Console.ReadLine();
 
-        }
+                var password = PasswordInput(name, workers);
+                if (password.Item3 == false)
+                {
+                    return 0;
 
-        public static void ManagerAut()
-        {
-
-        }
-
-        public static void WarehouseManagerAut()
-        {
-
-        }
-        public static void SellerAut()
-        {
+                }
+                else
+                {
+                    return workers.IndexOf((password.Item1, password.Item2));
+                }
+            }
+            
 
         }
     }

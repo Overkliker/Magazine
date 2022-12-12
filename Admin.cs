@@ -8,6 +8,23 @@ namespace Magazine
 {
     internal class Admin : User
     {
+        ModelOfWorker admin = new ModelOfWorker();
+        public Admin(ModelOfWorker worker)
+        {
+            admin = worker;
+        }
+        public void Interface()
+        {
+            while (true)
+            {
+                InterfaceForUsers.PrintInterface(admin);
+                ConsoleKeyInfo key = Console.ReadKey();
+            }
+            
+
+
+
+        }
         public void Create()
         {
             throw new NotImplementedException();
