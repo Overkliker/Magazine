@@ -14,7 +14,7 @@ namespace Magazine
             Console.SetCursorPosition(50, 0);
             Console.WriteLine($"Добро пожаловать, {user.name}");
             Console.SetCursorPosition(85, 0);
-            Console.WriteLine($"Роль: Admin");
+            Console.WriteLine($"Роль: {roles[user.atribute]}");
             Console.WriteLine("______________________________________________________________________________________________________________________________________________");
             Console.SetCursorPosition(5, 2);
             Console.WriteLine($"ID {user.id}");

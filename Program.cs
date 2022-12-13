@@ -8,17 +8,8 @@ namespace Magazine
 {
     public class Program
     {
-        internal enum Post
-        {
-            F1 = ConsoleKey.F1
-        }
         static void Main(string[] argrs)
         {
-            Console.WriteLine("0- Админ");
-            if(Console.ReadKey().Key == (ConsoleKey)Post.F1)
-            {
-                Console.WriteLine(Post.F1);
-            }
 
             List<ModelOfWorker> con = Converter.Des<List<ModelOfWorker>>();
             List<(string, string)> logins = new List<(string, string)>();
@@ -34,7 +25,7 @@ namespace Magazine
             {
                 case 1:
                     Console.Clear();
-                    Admin admin = new Admin(worker);
+                    Admin admin = new Admin(worker, con);
                     admin.Interface();
                     break;
             }
