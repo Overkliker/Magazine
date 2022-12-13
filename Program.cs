@@ -8,18 +8,19 @@ namespace Magazine
 {
     public class Program
     {
-
+        internal enum Post
+        {
+            F1 = ConsoleKey.F1
+        }
         static void Main(string[] argrs)
         {
-            List<ModelOfWorker> con;
-
-            using (StreamReader read = new StreamReader("C:\\Users\\Overkliker\\source\\repos\\Magazine\\usersData.json"))
+            Console.WriteLine("0- Админ");
+            if(Console.ReadKey().Key == (ConsoleKey)Post.F1)
             {
-                string a = read.ReadToEnd();
-                con = JsonConvert.DeserializeObject<List<ModelOfWorker>>(a);
-
+                Console.WriteLine(Post.F1);
             }
 
+            List<ModelOfWorker> con = Converter.Des<List<ModelOfWorker>>();
             List<(string, string)> logins = new List<(string, string)>();
             for (int i = 0; i < con.Count; i++)
             {
@@ -33,7 +34,7 @@ namespace Magazine
             {
                 case 1:
                     Console.Clear();
-                    Admin admin =  new Admin(worker);
+                    Admin admin = new Admin(worker);
                     admin.Interface();
                     break;
             }

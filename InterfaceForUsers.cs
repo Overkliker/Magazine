@@ -8,6 +8,7 @@ namespace Magazine
 {
     public class InterfaceForUsers
     {
+        public static string[] roles = new string[] { "Admin", "Manager", "Seller", };
         public static void PrintInterface(ModelOfWorker user)
         {
             Console.SetCursorPosition(50, 0);
@@ -22,32 +23,11 @@ namespace Magazine
             Console.SetCursorPosition(5, 4);
             Console.WriteLine($"POST {user.post}");
 
-            Console.SetCursorPosition(85, 2);
-            Console.WriteLine("|");
-
-            Console.SetCursorPosition(85, 3);
-            Console.WriteLine("|");
-
-            Console.SetCursorPosition(85, 4);
-            Console.WriteLine("|");
-
-            Console.SetCursorPosition(85, 5);
-            Console.WriteLine("|");
-
-            Console.SetCursorPosition(85, 6);
-            Console.WriteLine("|");
-
-            Console.SetCursorPosition(85, 7);
-            Console.WriteLine("|");
-
-            Console.SetCursorPosition(85, 8);
-            Console.WriteLine("|");
-
-            Console.SetCursorPosition(85, 9);
-            Console.WriteLine("|");
-
-            Console.SetCursorPosition(85, 10);
-            Console.WriteLine("|");
+            for (int i = 2; i < 12; i++)
+            {
+                Console.SetCursorPosition(85, i);
+                Console.WriteLine("|");
+            }
 
             Console.SetCursorPosition(95, 2);
             Console.WriteLine("F1 - добавить запись");

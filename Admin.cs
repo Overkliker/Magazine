@@ -9,6 +9,10 @@ namespace Magazine
     internal class Admin : User
     {
         ModelOfWorker admin = new ModelOfWorker();
+        internal enum Post
+        {
+            F1 = ConsoleKey.F1
+        }
         public Admin(ModelOfWorker worker)
         {
             admin = worker;
@@ -19,6 +23,12 @@ namespace Magazine
             {
                 InterfaceForUsers.PrintInterface(admin);
                 ConsoleKeyInfo key = Console.ReadKey();
+                Console.WriteLine("0- Админ");
+                if (Console.ReadKey().Key == (ConsoleKey)Post.F1)
+                {
+                    Console.WriteLine(Post.F1);
+                }
+                Console.Clear();
             }
             
 
