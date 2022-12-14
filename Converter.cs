@@ -17,10 +17,9 @@ namespace Magazine
             string json = JsonConvert.SerializeObject(obj);
             File.WriteAllText(path + "\\" + filename, json);
         }
-        public static T Des<T>()
+        public static T Des<T>(string path)
         {
-            string startupPath = Directory.GetCurrentDirectory();
-            string json = File.ReadAllText(startupPath.Substring(0, 41) + "\\usersData.json");
+            string json = File.ReadAllText(path);
             T worker = JsonConvert.DeserializeObject<T>(json);
             return worker;
         }

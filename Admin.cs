@@ -25,9 +25,9 @@ namespace Magazine
             {
                 InterfaceForUsers.PrintInterface(admin);
                 ConsoleKeyInfo key = Console.ReadKey();
-                Console.WriteLine("0- Админ");
                 if (Console.ReadKey().Key == (ConsoleKey)Post.F1)
                 {
+                    Console.Clear();
                     Create();
                 }
                 Console.Clear();
@@ -39,10 +39,30 @@ namespace Magazine
         }
         public void Create()
         {
-            Console.WriteLine("Введите индекс пользователя которого хотите создать");
-            Console.WriteLine("Введите пароль пользователя");
-            Console.WriteLine("Введите имя польвателя");
-            Console.WriteLine("Введите фамилию польвателя");
+            string startupPath = Directory.GetCurrentDirectory();
+            string json = startupPath.Substring(0, 41) + "\\UserTables.json";
+            List<UserTable> con = Converter.Des<List<UserTable>>(json);
+
+            Console.WriteLine("Введите логин");
+            string login = Console.ReadLine();
+            Console.WriteLine("Введите пароль польвателя");
+            string password = Console.ReadLine();
+            Console.WriteLine("Введите роль польвателя");
+            int role = Convert.ToInt32(Console.ReadLine());
+
+            int id = con[con.Count - 1].id + 1;
+
+            UserTable newUser = new UserTable();
+            newUser.id = id;
+            newUser.login = login;
+            newUser.password = password;
+            newUser.role = role;
+
+            con.Add(newUser);
+
+            Console.WriteLine("Введите название файла");
+            string filename = Console.ReadLine();
+            Converter.Ser<List<UserTable>>(con, filename);
 
         }
 

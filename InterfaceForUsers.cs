@@ -16,12 +16,7 @@ namespace Magazine
             Console.SetCursorPosition(85, 0);
             Console.WriteLine($"Роль: {roles[user.atribute]}");
             Console.WriteLine("______________________________________________________________________________________________________________________________________________");
-            Console.SetCursorPosition(5, 2);
-            Console.WriteLine($"ID {user.id}");
-            Console.SetCursorPosition(5, 3);
-            Console.WriteLine($"PASSWORD {user.password}");
-            Console.SetCursorPosition(5, 4);
-            Console.WriteLine($"POST {user.post}");
+            UsersForAdmin();
 
             for (int i = 2; i < 12; i++)
             {
@@ -33,6 +28,25 @@ namespace Magazine
             Console.WriteLine("F1 - добавить запись");
             Console.SetCursorPosition(95, 3);
             Console.WriteLine("F2 - найти запись");
+        }
+
+        public static void UsersForAdmin()
+        {
+            string startupPath = Directory.GetCurrentDirectory();
+            string json = startupPath.Substring(0, 41) + "\\UserTables.json";
+            List<UserTable> con = Converter.Des<List<UserTable>>(json);
+            for (int i = 2; i < con.Count + 2; i++)
+            {
+                Console.SetCursorPosition(5, i);
+                Console.WriteLine($"ID {con[i - 2].id}");
+                Console.SetCursorPosition(15, i);
+                Console.WriteLine($"{con[i - 2].login}");
+                Console.SetCursorPosition(35, i);
+                Console.WriteLine($"{con[i - 2].password}");
+                Console.SetCursorPosition(60, i);
+                Console.WriteLine($"{con[i - 2].role}");
+            }
+
         }
     }
 }
