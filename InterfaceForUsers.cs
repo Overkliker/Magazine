@@ -11,6 +11,7 @@ namespace Magazine
         public static string[] roles = new string[] { "Admin", "Manager", "Seller", };
         public static void PrintInterface(ModelOfWorker user)
         {
+            //Здесь делается интерфейс для админа
             Console.SetCursorPosition(50, 0);
             Console.WriteLine($"Добро пожаловать, {user.name}");
             Console.SetCursorPosition(85, 0);
@@ -33,7 +34,8 @@ namespace Magazine
         public static void UsersForAdmin()
         {
             string startupPath = Directory.GetCurrentDirectory();
-            string json = startupPath.Substring(0, 41) + "\\UserTables.json";
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\UserTables.json";
             List<UserTable> con = Converter.Des<List<UserTable>>(json);
             for (int i = 2; i < con.Count + 2; i++)
             {

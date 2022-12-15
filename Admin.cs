@@ -40,7 +40,8 @@ namespace Magazine
         public void Create()
         {
             string startupPath = Directory.GetCurrentDirectory();
-            string json = startupPath.Substring(0, 41) + "\\UserTables.json";
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\UserTables.json";
             List<UserTable> con = Converter.Des<List<UserTable>>(json);
 
             Console.WriteLine("Введите логин");

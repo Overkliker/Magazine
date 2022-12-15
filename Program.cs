@@ -10,8 +10,11 @@ namespace Magazine
     {
         static void Main(string[] argrs)
         {
+            //17
             string startupPath = Directory.GetCurrentDirectory();
-            string json = startupPath.Substring(0, 41) + "\\usersData.json";
+            int len = startupPath.Length - 17;
+
+            string json = startupPath.Substring(0, len) + "\\usersData.json";
             List<ModelOfWorker> con = Converter.Des<List<ModelOfWorker>>(json);
             List<(string, string)> logins = new List<(string, string)>();
             for (int i = 0; i < con.Count; i++)
