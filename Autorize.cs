@@ -13,6 +13,8 @@ namespace Magazine
 
         public static (string, string, bool) PasswordInput(string name, List<(string, string)> workers)
         {
+
+            //Ввод пароля, да не обычного, а типа пассворд бокса!
             string inpt = string.Empty;
             while (!workers.Contains((name, inpt)))
             {
@@ -50,6 +52,7 @@ namespace Magazine
         {
             while (true)
             {
+                //Ввод логина юзера
                 Console.WriteLine("Введите имя");
                 string name= Console.ReadLine();
 

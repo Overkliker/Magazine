@@ -29,14 +29,18 @@ namespace Magazine
             Console.WriteLine("F1 - добавить запись");
             Console.SetCursorPosition(95, 3);
             Console.WriteLine("F2 - найти запись");
+            Console.SetCursorPosition(95, 4);
+            Console.WriteLine("F3 - удалить запись");
         }
 
         public static void UsersForAdmin()
         {
+            
             string startupPath = Directory.GetCurrentDirectory();
             int len = startupPath.Length - 17;
             string json = startupPath.Substring(0, len) + "\\UserTables.json";
             List<UserTable> con = Converter.Des<List<UserTable>>(json);
+            //Вывод юзеров этой говёной системы
             for (int i = 2; i < con.Count + 2; i++)
             {
                 Console.SetCursorPosition(5, i);

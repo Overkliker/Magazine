@@ -10,7 +10,7 @@ namespace Magazine
     {
         static void Main(string[] argrs)
         {
-            //17
+
             string startupPath = Directory.GetCurrentDirectory();
             int len = startupPath.Length - 17;
 
