@@ -11,15 +11,18 @@ namespace Magazine
     {
         ModelOfWorker admin = new ModelOfWorker();
         //Юзеры системы
-        List<ModelOfWorker> allUsers = new List<ModelOfWorker>();
+        List<UserTable> allUsers = new List<UserTable>();
         internal enum Post
         {
             F1 = ConsoleKey.F1,
             F2 = ConsoleKey.F2,
             F3 = ConsoleKey.F3,
-            Enter = ConsoleKey.Enter
+            Enter = ConsoleKey.Enter,
+            UpArrow = ConsoleKey.UpArrow,
+            DownArrow = ConsoleKey.DownArrow,
+
         }
-        public Admin(ModelOfWorker worker, List<ModelOfWorker> allUsers)
+        public Admin(ModelOfWorker worker, List<UserTable> allUsers)
         {
             admin = worker;
             this.allUsers = allUsers;
@@ -27,13 +30,16 @@ namespace Magazine
         public void Interface()
         {
             int pose = 2;
-            int max = allUsers.Count() + 2;
+            int max = allUsers.Count() + 1;
             while (true)
             {
-
-                InterfaceForUsers.PrintInterface(admin);
+                Console.Clear();
+                Console.WriteLine(pose);
                 Console.SetCursorPosition(0, pose);
                 Console.WriteLine("->");
+
+                InterfaceForUsers.PrintInterface(admin);
+
                 ConsoleKeyInfo key = Console.ReadKey();
                 if (Console.ReadKey().Key == (ConsoleKey)Post.F1)
                 {
@@ -46,11 +52,11 @@ namespace Magazine
                     Console.Clear();
                     Delete();
                 }
-                else if (key.Key == ConsoleKey.UpArrow)
+                else if (key.Key == (ConsoleKey)Post.UpArrow)
                 {
                     if (pose <= 2)
                     {
-                        pose += max - 1;
+                        pose += max - 2;
                     }
                     else
                     {
@@ -58,11 +64,12 @@ namespace Magazine
                     }
 
                 }
-                else if (key.Key == ConsoleKey.DownArrow)
+                else if (key.Key == (ConsoleKey)Post.DownArrow)
                 {
-                    if (pose >= max - 1)
+                    if (pose >= max)
                     {
-                        pose -= max - 1;
+                        Console.WriteLine("hh");
+                        pose -= max - 2 ;
                     }
                     else
                     {
@@ -72,10 +79,12 @@ namespace Magazine
                 }
                 else if (key.Key == (ConsoleKey)Post.Enter)
                 {
-
+                    Console.Clear();
+                    UserTable user = allUsers[pose - 2];
+                    Update(user.id);
                 }
 
-                Console.Clear();
+             
             }
             
 
@@ -152,14 +161,26 @@ namespace Magazine
 
         }
 
-        public void Read()
+        public void Read(int id)
         {
-            throw new NotImplementedException();
-        }
+            List<int> ids = new List<int>();
 
-        public void Save()
-        {
-            throw new NotImplementedException();
+            //Добавление в список айдишников юзеров
+            foreach (UserTable i in allUsers)
+            {
+                ids.Add(i.id);
+            }
+            UserTable user = allUsers[ids.IndexOf((id))];
+            Console.WriteLine(user.id);
+            Console.WriteLine(user.login);
+            Console.WriteLine(user.role);
+            Console.WriteLine(user.password);
+            Console.WriteLine();
+
+            Console.WriteLine("Нажмите на любую кнопку что бы выйти");
+            Console.ReadKey();
+            
+
         }
 
         public void Search()
@@ -167,54 +188,36 @@ namespace Magazine
             throw new NotImplementedException();
         }
 
-        public void Update()
+        public void Update(int userUpdate)
         {
-            //Короче, здесь надо переделать, что бы он по ентеру передавал айдишник юзера в метод, и работал с ним
-            string startupPath = Directory.GetCurrentDirectory();
-            int len = startupPath.Length - 17;
-            string json = startupPath.Substring(0, len) + "\\UserTables.json";
-            List<UserTable> con = Converter.Des<List<UserTable>>(json);
+
             List<int> ids = new List<int>();
 
-            foreach (UserTable user in con)
+            //Добавление в список айдишников юзеров
+            foreach (UserTable i in allUsers)
             {
-                ids.Add(user.id);
+                ids.Add(i.id);
             }
 
-            Console.WriteLine("Введите id пользователя, которого хотите удалить");
-            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите новый логин");
+            string login = Console.ReadLine();
+            Console.WriteLine("Введите новый пароль польвателя");
+            string password = Console.ReadLine();
+            Console.WriteLine("Введите новую роль польвателя");
+            int role = Convert.ToInt32(Console.ReadLine());
 
+            UserTable user = allUsers[ids.IndexOf((userUpdate))];
+            allUsers.Remove(user);
+            user.login = login;
+            user.password = password;
+            user.role = role;
 
+            allUsers.Add(user);
+            Console.WriteLine("Введите название файла");
+            string filename = Console.ReadLine();
+            Converter.Ser<List<UserTable>>(allUsers, filename);
 
-            if (ids.Contains(id))
-            {
-                Console.WriteLine("Введите новый логин");
-                string login = Console.ReadLine();
-                Console.WriteLine("Введите новый пароль польвателя");
-                string password = Console.ReadLine();
-                Console.WriteLine("Введите новую роль польвателя");
-                int role = Convert.ToInt32(Console.ReadLine());
-
-                UserTable user = con[ids.IndexOf(id)];
-                con.Remove(user);
-                user.login = login;
-                user.password = password;
-                user.role = role;
-
-                con.Add(user);
-                Console.WriteLine("Введите название файла");
-                string filename = Console.ReadLine();
-                Converter.Ser<List<UserTable>>(con, filename);
-
-            }
-            else
-            {
-                Console.WriteLine();
-                Console.ReadKey();
-                Console.Clear();
-            }
 
         }
-
     }
 }

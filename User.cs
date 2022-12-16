@@ -10,10 +10,9 @@ namespace Magazine
     {
         public void Create();
         public void Read();
-        public void Update();
+        public void Update(int obj);
         public void Delete();
         public void Search();
-        public void Save();
 
     }
 }

@@ -33,7 +33,7 @@ namespace Magazine
             throw new NotImplementedException();
         }
 
-        public void Update()
+        public void Update(int id)
         {
             throw new NotImplementedException();
         }

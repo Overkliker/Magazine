@@ -4,5 +4,11 @@
     "login": "Joe",
     "password": "hz123",
     "role": 1
+  },
+  {
+    "id": 2,
+    "login": "Max",
+    "password": "hz123hz",
+    "role": 3
   }
 ]
