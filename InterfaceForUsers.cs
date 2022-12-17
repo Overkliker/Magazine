@@ -25,7 +25,11 @@ namespace Magazine
             {
                 UsersForManager();
             }
-            
+            else if (user.atribute == 3)
+            {
+                ProductsForWarehouseManager();
+            }
+
 
             for (int i = 2; i < 12; i++)
             {
@@ -81,6 +85,25 @@ namespace Magazine
                 Console.WriteLine($"{con[i - 2].password}");
                 Console.SetCursorPosition(60, i);
                 Console.WriteLine($"{con[i - 2].atribute}");
+            }
+        }
+        public static void ProductsForWarehouseManager()
+        {
+            string startupPath = Directory.GetCurrentDirectory();
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\Product.json";
+            List<Product> con = Converter.Des<List<Product>>(json);
+            //Вывод товаров этой говёной системы
+            for (int i = 2; i < con.Count + 2; i++)
+            {
+                Console.SetCursorPosition(5, i);
+                Console.WriteLine($"ID {con[i - 2].id}");
+                Console.SetCursorPosition(15, i);
+                Console.WriteLine($"{con[i - 2].name}");
+                Console.SetCursorPosition(35, i);
+                Console.WriteLine($"{con[i - 2].price}");
+                Console.SetCursorPosition(60, i);
+                Console.WriteLine($"{con[i - 2].count}");
             }
         }
     }

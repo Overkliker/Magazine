@@ -43,6 +43,14 @@ namespace Magazine
                     Console.Clear();
                     Manager manager = new Manager(worker, con);
                     break;
+                case 3:
+                    Console.Clear();
+                    string allPath = Directory.GetCurrentDirectory();
+                    int lenProd = startupPath.Length - 17;
+                    string jsonProd = startupPath.Substring(0, lenProd) + "\\Product.json";
+                    List<Product> products = Converter.Des<List<Product>>(jsonProd);
+                    WarehouseManager warehouseManager = new WarehouseManager(worker, products);
+                    break;
             }
 
         }
