@@ -17,6 +17,7 @@ namespace Magazine
             F1 = ConsoleKey.F1,
             F2 = ConsoleKey.F2,
             F3 = ConsoleKey.F3,
+            F4 = ConsoleKey.F4,
             Enter = ConsoleKey.Enter,
             UpArrow = ConsoleKey.UpArrow,
             DownArrow = ConsoleKey.DownArrow,
@@ -41,13 +42,23 @@ namespace Magazine
                 InterfaceForUsers.PrintInterface(admin);
 
                 ConsoleKeyInfo key = Console.ReadKey();
-                if (Console.ReadKey().Key == (ConsoleKey)Post.F1)
+                if (key.Key == (ConsoleKey)Post.F1)
                 {
                     Console.Clear();
                     Create();
                 }
+                else if (key.Key == (ConsoleKey)Post.F2)
+                {
+                    Console.Clear();
+                    Search();
+                }
 
-                else if (Console.ReadKey().Key == (ConsoleKey)Post.F3)
+                else if (key.Key == (ConsoleKey)Post.F3)
+                {
+                    Console.Clear();
+                    Delete();
+                }
+                else if (key.Key == (ConsoleKey)Post.F4)
                 {
                     Console.Clear();
                     Delete();
@@ -68,7 +79,6 @@ namespace Magazine
                 {
                     if (pose >= max)
                     {
-                        Console.WriteLine("hh");
                         pose -= max - 2 ;
                     }
                     else
@@ -185,7 +195,39 @@ namespace Magazine
 
         public void Search()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Введите ID");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите логин");
+            string login = Console.ReadLine();
+            Console.WriteLine("Введите пароль польвателя");
+            string password = Console.ReadLine();
+            Console.WriteLine("Введите роль польвателя");
+            int role = Convert.ToInt32(Console.ReadLine());
+
+            UserTable user = new UserTable();
+            user.id = id;
+            user.login = login;
+            user.password = password;
+            user.role = role;
+
+            if (allUsers.Contains(user))
+            {
+                Console.Clear();
+                Console.WriteLine(user.id);
+                Console.WriteLine(user.login);
+                Console.WriteLine(user.role);
+                Console.WriteLine(user.password);
+                Console.WriteLine();
+
+                Console.WriteLine("Нажмите на любую кнопку что бы выйти");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("Такого пользователя нету, нажмите любую клавишу, что бы выйти");
+                Console.ReadKey();
+                Console.Clear();
+            }
         }
 
         public void Update(int userUpdate)

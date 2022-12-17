@@ -18,7 +18,7 @@ namespace Magazine
             throw new NotImplementedException();
         }
 
-        public void Read()
+        public void Read(int id)
         {
             throw new NotImplementedException();
         }

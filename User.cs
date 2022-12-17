@@ -9,8 +9,8 @@ namespace Magazine
     public interface User
     {
         public void Create();
-        public void Read();
-        public void Update(int obj);
+        public void Read(int id);
+        public void Update(int id);
         public void Delete();
         public void Search();
 

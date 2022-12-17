@@ -18,5 +18,6 @@ namespace Magazine
         public Passport passport = new Passport();
         public string post;
         public int salary;
+        public int privID;
     }
 }

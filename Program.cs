@@ -14,54 +14,12 @@ namespace Magazine
             string startupPath = Directory.GetCurrentDirectory();
             int len = startupPath.Length - 17;
 
+            //Работяги
             string json = startupPath.Substring(0, len) + "\\usersData.json";
             List<ModelOfWorker> con = Converter.Des<List<ModelOfWorker>>(json);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            //Чисто лайтовые юзеры - не работяги
             string jsonUs = startupPath.Substring(0, len) + "\\UserTables.json";
             List<UserTable> convert = Converter.Des<List<UserTable>>(jsonUs);
 
@@ -80,6 +38,10 @@ namespace Magazine
                     Console.Clear();
                     Admin admin = new Admin(worker, convert);
                     admin.Interface();
+                    break;
+                case 2:
+                    Console.Clear();
+                    Manager manager = new Manager(worker, con);
                     break;
             }
 
