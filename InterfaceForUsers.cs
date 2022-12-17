@@ -96,6 +96,7 @@ namespace Magazine
             //Вывод товаров этой говёной системы
             for (int i = 2; i < con.Count + 2; i++)
             {
+
                 Console.SetCursorPosition(5, i);
                 Console.WriteLine($"ID {con[i - 2].id}");
                 Console.SetCursorPosition(15, i);
