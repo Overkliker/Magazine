@@ -61,7 +61,7 @@ namespace Magazine
                 else if (key.Key == (ConsoleKey)Post.F4)
                 {
                     Console.Clear();
-                    Delete();
+                    Read(pose);
                 }
                 else if (key.Key == (ConsoleKey)Post.UpArrow)
                 {

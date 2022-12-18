@@ -8,7 +8,7 @@ namespace Magazine
 {
     public class InterfaceForUsers
     {
-        public static string[] roles = new string[] { "Admin", "Manager", "Warehouse Manager", };
+        public static string[] roles = new string[] { "Admin", "Manager", "Warehouse Manager", "Seller"};
         public static void PrintInterface(ModelOfWorker user)
         {
             //Здесь делается интерфейс для админа
@@ -29,6 +29,10 @@ namespace Magazine
             {
                 ProductsForWarehouseManager();
             }
+            else if (user.atribute == 4)
+            {
+                ProductsForWarehouseManager();
+            }
 
 
             for (int i = 2; i < 12; i++)
@@ -36,15 +40,18 @@ namespace Magazine
                 Console.SetCursorPosition(85, i);
                 Console.WriteLine("|");
             }
-
-            Console.SetCursorPosition(95, 2);
-            Console.WriteLine("F1 - добавить запись");
-            Console.SetCursorPosition(95, 3);
-            Console.WriteLine("F2 - найти запись");
-            Console.SetCursorPosition(95, 4);
-            Console.WriteLine("F3 - удалить запись");
-            Console.SetCursorPosition(95, 5);
-            Console.WriteLine("F4 - очитать запись");
+            if (user.atribute != 4)
+            {
+                Console.SetCursorPosition(95, 2);
+                Console.WriteLine("F1 - добавить запись");
+                Console.SetCursorPosition(95, 3);
+                Console.WriteLine("F2 - найти запись");
+                Console.SetCursorPosition(95, 4);
+                Console.WriteLine("F3 - удалить запись");
+                Console.SetCursorPosition(95, 5);
+                Console.WriteLine("F4 - прочитать запись");
+            }
+            
         }
 
         public static void UsersForAdmin()

@@ -63,7 +63,7 @@ namespace Magazine
                 else if (key.Key == (ConsoleKey)Post.F4)
                 {
                     Console.Clear();
-                    Delete();
+                    Read(pose);
                 }
                 else if (key.Key == (ConsoleKey)Post.UpArrow)
                 {
@@ -101,12 +101,70 @@ namespace Magazine
         }
         public void Create()
         {
-            throw new NotImplementedException();
+            string startupPath = Directory.GetCurrentDirectory();
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\Product.json";
+            List<Product> con = Converter.Des<List<Product>>(json);
+
+            Console.WriteLine("Введите название");
+            string name = Console.ReadLine();
+            Console.WriteLine("Введите цену");
+            int price = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите количество");
+            int count = Convert.ToInt32(Console.ReadLine());
+
+            int id = con[con.Count - 1].id + 1;
+
+            Product prod = new Product();
+            prod.id = id;
+            prod.name = name;
+            prod.price = price;
+            prod.count = count;
+
+            con.Add(prod);
+            allProducts.Add(prod);
+
+            Console.WriteLine("Введите название файла");
+            string filename = Console.ReadLine();
+            Converter.Ser<List<Product>>(con, filename);
         }
 
         public void Delete()
         {
-            throw new NotImplementedException();
+            //Усечение строки до файла с юзерами
+            string startupPath = Directory.GetCurrentDirectory();
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\Product.json";
+            List<Product> con = Converter.Des<List<Product>>(json);
+            List<int> ids = new List<int>();
+
+            //Добавление в список айдишников юзеров
+            foreach (Product user in con)
+            {
+                ids.Add(user.id);
+            }
+
+
+            Console.WriteLine("Введите id товара, который хотите удалить");
+            int id = Convert.ToInt32(Console.ReadLine());
+
+            //Проверка на существующий айдишник
+            if (ids.Contains(id))
+            {
+                Product product = con[ids.IndexOf(id)];
+                con.Remove(product);
+
+                Console.WriteLine("Введите название файла");
+                string filename = Console.ReadLine();
+                Converter.Ser<List<Product>>(con, filename);
+
+            }
+            else
+            {
+                Console.WriteLine("Такого пользователя нету, нажмите любую клавишу, что бы выйти");
+                Console.ReadKey();
+                Console.Clear();
+            }
         }
 
         public void Read(int id)
@@ -168,7 +226,32 @@ namespace Magazine
 
         public void Update(int id)
         {
-            throw new NotImplementedException();
+            List<int> ids = new List<int>();
+
+            //Добавление в список айдишников юзеров
+            foreach (Product i in allProducts)
+            {
+                ids.Add(i.id);
+            }
+
+            Console.WriteLine("Введите название товара");
+            string name = Console.ReadLine();
+            Console.WriteLine("Введите цену товара");
+            int price = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите количество товара на складе");
+            int count = Convert.ToInt32(Console.ReadLine());
+
+            Product product = allProducts[ids.IndexOf((id))];
+            allProducts.Remove(product);
+            product.name = name;
+            product.price = price;
+            product.count = count;
+
+
+            allProducts.Add(product);
+            Console.WriteLine("Введите название файла");
+            string filename = Console.ReadLine();
+            Converter.Ser<List<Product>>(allProducts, filename);
         }
     }
 }
