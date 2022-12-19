@@ -51,6 +51,14 @@ namespace Magazine
                     List<Product> products = Converter.Des<List<Product>>(jsonProd);
                     WarehouseManager warehouseManager = new WarehouseManager(worker, products);
                     break;
+                case 4:
+                    Console.Clear();
+                    string allPathForSeller = Directory.GetCurrentDirectory();
+                    int lenProdSeller = startupPath.Length - 17;
+                    string jsonProdSeller = startupPath.Substring(0, lenProdSeller) + "\\Product.json";
+                    List<Product> productsSeller = Converter.Des<List<Product>>(jsonProdSeller);
+                    Seller seller = new Seller(worker, productsSeller);
+                    break;
             }
 
         }

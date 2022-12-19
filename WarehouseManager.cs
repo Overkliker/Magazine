@@ -122,7 +122,7 @@ namespace Magazine
             prod.count = count;
 
             con.Add(prod);
-            allProducts.Add(prod);
+            allProducts.Insert(id, prod);
 
             Console.WriteLine("Введите название файла");
             string filename = Console.ReadLine();
@@ -248,7 +248,7 @@ namespace Magazine
             product.count = count;
 
 
-            allProducts.Add(product);
+            allProducts.Insert(id, product);
             Console.WriteLine("Введите название файла");
             string filename = Console.ReadLine();
             Converter.Ser<List<Product>>(allProducts, filename);
