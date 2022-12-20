@@ -13,9 +13,8 @@ namespace Magazine
         //Конверт в джэйсон
         public static void Ser<T>(T obj, string filename)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string json = JsonConvert.SerializeObject(obj);
-            File.WriteAllText(path + "\\" + filename, json);
+            File.WriteAllText(filename, json);
         }
 
         //Приведение к классу от джэйсона

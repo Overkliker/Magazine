@@ -41,11 +41,18 @@ namespace Magazine
             {
                 return (name, inpt, false);
             }
-            else
+            else if (workers.Contains((name, inpt)))
             {
+                Console.WriteLine("asdasd");
                 return (name, inpt, true);
+                Console.ReadKey();
             }
 
+            else
+            {
+                Console.WriteLine("Bred kakoito");
+                return (name, inpt, false);
+            }
         }
 
         public static int Aut(List<(string, string)> workers)
@@ -59,11 +66,17 @@ namespace Magazine
                 var password = PasswordInput(name, workers);
                 if (password.Item3 == false)
                 {
-                    return 0;
+                    return -1;
 
                 }
-                else
+                else if (password.Item3 == true)
                 {
+                    foreach (var worker in workers)
+                    {
+                        Console.WriteLine(worker);
+                    }
+
+
                     return workers.IndexOf((password.Item1, password.Item2));
                 }
             }

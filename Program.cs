@@ -30,10 +30,28 @@ namespace Magazine
             }
 
             int ind = Autorize.Aut(logins);
-            ModelOfWorker worker = con[ind];
+            ModelOfWorker worker = new ModelOfWorker();
+            if (ind != -1)
+            {
+                worker = con[ind];
+            }
+            else
+            {
+                foreach (ModelOfWorker i in con)
+                {
+                    if (i.atribute == -1)
+                    {
+                        worker = i;
+                    }
+                }
+            }
+            
 
             switch (worker.atribute)
             {
+                case -1:
+                    Console.WriteLine("Говно, переделыйвай");
+                    break;
                 case 1:
                     Console.Clear();
                     Admin admin = new Admin(worker, convert);

@@ -34,6 +34,12 @@ namespace Magazine
             int max = allUsers.Count() + 1;
             while (true)
             {
+                //Усечение строки до файла с юзерами
+                string startupPath = Directory.GetCurrentDirectory();
+                int len = startupPath.Length - 17;
+                string json = startupPath.Substring(0, len) + "\\UserTables.json";
+                List<UserTable> con = Converter.Des<List<UserTable>>(json);
+                max = con.Count() + 1;
                 Console.Clear();
                 Console.WriteLine(pose);
                 Console.SetCursorPosition(0, pose);
@@ -125,9 +131,8 @@ namespace Magazine
 
             con.Add(newUser);
 
-            Console.WriteLine("Введите название файла");
-            string filename = Console.ReadLine();
-            Converter.Ser<List<UserTable>>(con, filename);
+            ;
+            Converter.Ser<List<UserTable>>(con, json);
 
         }
 
@@ -156,9 +161,8 @@ namespace Magazine
                 UserTable user = con[ids.IndexOf(id)];
                 con.Remove(user);
 
-                Console.WriteLine("Введите название файла");
-                string filename = Console.ReadLine();
-                Converter.Ser<List<UserTable>>(con, filename);
+                
+                Converter.Ser<List<UserTable>>(con, json);
 
             }
             else
@@ -210,7 +214,16 @@ namespace Magazine
             user.password = password;
             user.role = role;
 
-            if (allUsers.Contains(user))
+
+            List<int> ids = new List<int>();
+
+            //Добавление в список айдишников юзеров
+            foreach (UserTable i in allUsers)
+            {
+                ids.Add(i.id);
+            }
+
+            if (ids.Contains(id))
             {
                 Console.Clear();
                 Console.WriteLine(user.id);
@@ -232,6 +245,11 @@ namespace Magazine
 
         public void Update(int userUpdate)
         {
+            //Усечение строки до файла с юзерами
+            string startupPath = Directory.GetCurrentDirectory();
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\UserTables.json";
+            List<UserTable> con = Converter.Des<List<UserTable>>(json);
 
             List<int> ids = new List<int>();
 
@@ -248,16 +266,15 @@ namespace Magazine
             Console.WriteLine("Введите новую роль польвателя");
             int role = Convert.ToInt32(Console.ReadLine());
 
-            UserTable user = allUsers[ids.IndexOf((userUpdate))];
+            UserTable user = con[ids.IndexOf((userUpdate))];
             allUsers.Remove(user);
             user.login = login;
             user.password = password;
             user.role = role;
 
-            allUsers.Add(user);
-            Console.WriteLine("Введите название файла");
-            string filename = Console.ReadLine();
-            Converter.Ser<List<UserTable>>(allUsers, filename);
+            allUsers.Insert(userUpdate, user);
+            string filename = "C:\\Users\\Kliker\\Source\\Repos\\Magazine\\UserTables.json";
+            Converter.Ser<List<UserTable>>(con, json);
 
 
         }
