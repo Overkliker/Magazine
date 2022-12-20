@@ -36,6 +36,11 @@ namespace Magazine
             int max = allProducts.Count() + 1;
             while (true)
             {
+                string startupPath = Directory.GetCurrentDirectory();
+                int len = startupPath.Length - 17;
+                string json = startupPath.Substring(0, len) + "\\Product.json";
+                List<Product> con = Converter.Des<List<Product>>(json);
+                max = con.Count() + 1;
                 Console.Clear();
                 Console.WriteLine(pose);
                 Console.SetCursorPosition(0, pose);
@@ -122,11 +127,7 @@ namespace Magazine
             prod.count = count;
 
             con.Add(prod);
-            allProducts.Insert(id, prod);
-
-            Console.WriteLine("Введите название файла");
-            string filename = Console.ReadLine();
-            Converter.Ser<List<Product>>(con, filename);
+            Converter.Ser<List<Product>>(con, json);
         }
 
         public void Delete()
@@ -154,9 +155,7 @@ namespace Magazine
                 Product product = con[ids.IndexOf(id)];
                 con.Remove(product);
 
-                Console.WriteLine("Введите название файла");
-                string filename = Console.ReadLine();
-                Converter.Ser<List<Product>>(con, filename);
+                Converter.Ser<List<Product>>(con, json);
 
             }
             else
@@ -169,14 +168,19 @@ namespace Magazine
 
         public void Read(int id)
         {
+            //Усечение строки до файла с юзерами
+            string startupPath = Directory.GetCurrentDirectory();
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\Product.json";
+            List<Product> con = Converter.Des<List<Product>>(json);
             List<int> ids = new List<int>();
 
             //Добавление в список айдишников юзеров
-            foreach (Product i in allProducts)
+            foreach (Product i in con)
             {
                 ids.Add(i.id);
             }
-            Product user = allProducts[ids.IndexOf((id))];
+            Product user = con[ids.IndexOf((id))];
             Console.WriteLine(user.id);
             Console.WriteLine(user.name);
             Console.WriteLine(user.price);
@@ -189,6 +193,20 @@ namespace Magazine
 
         public void Search()
         {
+            //Усечение строки до файла с юзерами
+            string startupPath = Directory.GetCurrentDirectory();
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\Product.json";
+            List<Product> con = Converter.Des<List<Product>>(json);
+
+            List<int> ids = new List<int>();
+
+            //Добавление в список айдишников юзеров
+            foreach (Product i in con)
+            {
+                ids.Add(i.id);
+            }
+
             Console.WriteLine("Введите ID");
             int id = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Введите название товара");
@@ -204,7 +222,7 @@ namespace Magazine
             products.price = price;
             products.count = count;
 
-            if (allProducts.Contains(products))
+            if (ids.Contains(id))
             {
                 Console.Clear();
                 Console.WriteLine(products.id);
@@ -226,10 +244,16 @@ namespace Magazine
 
         public void Update(int id)
         {
+            //Усечение строки до файла с юзерами
+            string startupPath = Directory.GetCurrentDirectory();
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\Product.json";
+            List<Product> con = Converter.Des<List<Product>>(json);
+
             List<int> ids = new List<int>();
 
             //Добавление в список айдишников юзеров
-            foreach (Product i in allProducts)
+            foreach (Product i in con)
             {
                 ids.Add(i.id);
             }
@@ -242,16 +266,14 @@ namespace Magazine
             int count = Convert.ToInt32(Console.ReadLine());
 
             Product product = allProducts[ids.IndexOf((id))];
-            allProducts.Remove(product);
+            con.Remove(product);
             product.name = name;
             product.price = price;
             product.count = count;
 
 
-            allProducts.Insert(id, product);
-            Console.WriteLine("Введите название файла");
-            string filename = Console.ReadLine();
-            Converter.Ser<List<Product>>(allProducts, filename);
+            con.Insert(id, product);
+            Converter.Ser<List<Product>>(con, json);
         }
     }
 }

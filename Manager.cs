@@ -33,6 +33,12 @@ namespace Magazine
             int max = allUsers.Count() + 1;
             while (true)
             {
+                string startupPath = Directory.GetCurrentDirectory();
+                int len = startupPath.Length - 17;
+                string json = startupPath.Substring(0, len) + "\\usersData.json";
+                List<ModelOfWorker> con = Converter.Des<List<ModelOfWorker>>(json);
+
+                max = con.Count() + 1;
                 Console.Clear();
                 Console.WriteLine(pose);
                 Console.SetCursorPosition(0, pose);
@@ -90,13 +96,6 @@ namespace Magazine
         }
         public void Create()
         {
-            List<int> ids = new List<int>();
-
-            //Добавление в список айдишников юзеров
-            foreach (ModelOfWorker i in allUsers)
-            {
-                ids.Add(i.id);
-            }
 
             Console.WriteLine("Введите имя");
             string name = Console.ReadLine();
@@ -140,12 +139,15 @@ namespace Magazine
 
             string startupPath = Directory.GetCurrentDirectory();
             int len = startupPath.Length - 17;
-            string json = startupPath.Substring(0, len) + "\\UserTables.json";
-            List<UserTable> con = Converter.Des<List<UserTable>>(json);
+            string json = startupPath.Substring(0, len) + "\\usersData.json";
+            List<ModelOfWorker> con = Converter.Des<List<ModelOfWorker>>(json);
+
+            string json2 = startupPath.Substring(0, len) + "\\UserTables.json";
+            List<UserTable> con2 = Converter.Des<List<UserTable>>(json2);
             List<int> idsUsers = new List<int>();
 
             //Добавление в список айдишников юзеров
-            foreach (UserTable user in con)
+            foreach (UserTable user in con2)
             {
                 idsUsers.Add(user.id);
             }
@@ -169,10 +171,8 @@ namespace Magazine
                 worker.salary = salary;
                 worker.privID = privID;
 
-                allUsers.Add(worker);
-                Console.WriteLine("Введите название файла");
-                string filename = Console.ReadLine();
-                Converter.Ser<List<ModelOfWorker>>(allUsers, filename);
+                con.Add(worker);
+                Converter.Ser<List<ModelOfWorker>>(allUsers, json);
             }
             else
             {
@@ -207,9 +207,7 @@ namespace Magazine
                 ModelOfWorker user = con[ids.IndexOf(id)];
                 con.Remove(user);
 
-                Console.WriteLine("Введите название файла");
-                string filename = Console.ReadLine();
-                Converter.Ser<List<ModelOfWorker>>(con, filename);
+                Converter.Ser<List<ModelOfWorker>>(con, json);
 
             }
             else
@@ -222,14 +220,18 @@ namespace Magazine
 
         public void Read(int id)
         {
+            string startupPath = Directory.GetCurrentDirectory();
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\usersData.json";
+            List<ModelOfWorker> con = Converter.Des<List<ModelOfWorker>>(json);
             List<int> ids = new List<int>();
 
             //Добавление в список айдишников юзеров
-            foreach (ModelOfWorker i in allUsers)
+            foreach (ModelOfWorker i in con)
             {
                 ids.Add(i.id);
             }
-            ModelOfWorker user = allUsers[ids.IndexOf((id))];
+            ModelOfWorker user = con[ids.IndexOf((id))];
 
             Console.WriteLine("Базовая инфа");
             Console.WriteLine(user.id);
@@ -255,10 +257,23 @@ namespace Magazine
 
             Console.WriteLine("Нажмите на любую кнопку что бы выйти");
             Console.ReadKey();
+            Console.Clear();
         }
 
         public void Search()
         {
+            string startupPath = Directory.GetCurrentDirectory();
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\usersData.json";
+            List<ModelOfWorker> con = Converter.Des<List<ModelOfWorker>>(json);
+            List<int> ids = new List<int>();
+
+            //Добавление в список айдишников юзеров
+            foreach (ModelOfWorker i in con)
+            {
+                ids.Add(i.id);
+            }
+
             Console.WriteLine("Введите ID");
             int id = Convert.ToInt32(Console.ReadLine());
 
@@ -313,7 +328,7 @@ namespace Magazine
             worker.post = post;
             worker.salary = salary;
 
-            if (allUsers.Contains(worker))
+            if (ids.Contains(worker.id))
             {
                 Console.Clear();
                 Console.WriteLine(worker.id);
@@ -345,10 +360,14 @@ namespace Magazine
 
         public void Update(int id)
         {
+            string startupPath = Directory.GetCurrentDirectory();
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\usersData.json";
+            List<ModelOfWorker> con = Converter.Des<List<ModelOfWorker>>(json);
             List<int> ids = new List<int>();
 
             //Добавление в список айдишников юзеров
-            foreach (ModelOfWorker i in allUsers)
+            foreach (ModelOfWorker i in con)
             {
                 ids.Add(i.id);
             }
@@ -393,19 +412,19 @@ namespace Magazine
             int privID = Convert.ToInt32(Console.ReadLine());
 
 
-            string startupPath = Directory.GetCurrentDirectory();
-            int len = startupPath.Length - 17;
-            string json = startupPath.Substring(0, len) + "\\UserTables.json";
-            List<UserTable> con = Converter.Des<List<UserTable>>(json);
+            string startupPath2 = Directory.GetCurrentDirectory();
+            int len2 = startupPath2.Length - 17;
+            string json2 = startupPath.Substring(0, len2) + "\\UserTables.json";
+            List<UserTable> con2 = Converter.Des<List<UserTable>>(json2);
             List<int> idsUsers = new List<int>();
 
             //Добавление в список айдишников юзеров
-            foreach (UserTable user in con)
+            foreach (UserTable user in con2)
             {
                 idsUsers.Add(user.id);
             }
 
-            if (idsUsers.Contains(privID))
+            if (ids.Contains(id))
             {
                 ModelOfWorker worker = allUsers[ids.IndexOf((id))];
                 allUsers.Remove(worker);
@@ -423,10 +442,8 @@ namespace Magazine
                 worker.salary = salary;
                 worker.privID = privID;
 
-                allUsers.Add(worker);
-                Console.WriteLine("Введите название файла");
-                string filename = Console.ReadLine();
-                Converter.Ser<List<ModelOfWorker>>(allUsers, filename);
+                allUsers.Insert(id, worker);
+                Converter.Ser<List<ModelOfWorker>>(allUsers, json);
             }
             else
             {

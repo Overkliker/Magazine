@@ -27,6 +27,7 @@ namespace Magazine
             Enter = ConsoleKey.Enter,
             UpArrow = ConsoleKey.UpArrow,
             DownArrow = ConsoleKey.DownArrow,
+            Esc = ConsoleKey.Escape
 
         }
         public void Interface()
@@ -80,6 +81,11 @@ namespace Magazine
                 else if (key.Key == (ConsoleKey)Post.S)
                 {
                     Save();
+                }
+                else if (key.Key == (ConsoleKey)Post.Esc)
+                {
+                    Console.Clear();
+                    break;
                 }
             }
         
@@ -187,16 +193,24 @@ namespace Magazine
         }
         public void Save()
         {
-            Console.WriteLine("Введите название файла для обновленного склада");
-            string filename = Console.ReadLine();
-            Converter.Ser<List<Product>>(allProd, filename);
+            //Усечение строки до файла с юзерами
+            string startupPath = Directory.GetCurrentDirectory();
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\Product.json";
+            List<Product> con = Converter.Des<List<Product>>(json);
+
+            Converter.Ser<List<Product>>(allProd, json);
 
             Console.WriteLine("Введите название файла сохранения проданных товаров");
             string filenameSelledProd = Console.ReadLine();
             Converter.Ser<List<SellerProduct>>(selledProducts, filenameSelledProd);
 
 
-            List<Accounting> buh = new List<Accounting>();
+            //Усечение строки до файла с юзерами
+            string startupPath1 = Directory.GetCurrentDirectory();
+            int len1 = startupPath1.Length - 17;
+            string json1 = startupPath1.Substring(0, len1) + "\\Accounting.json";
+            List<Accounting> con1 = Converter.Des<List<Accounting>>(json1);
 
             foreach (SellerProduct i in selledProducts)
             {
@@ -205,11 +219,10 @@ namespace Magazine
                 newAcc.name = i.name;
                 newAcc.sumPrice = i.count * i.price;
                 newAcc.pribavka = 1;
-                buh.Add(newAcc);
+                con1.Add(newAcc);
             }
-            Console.WriteLine("Введите название файла бухгалтерии");
-            string filenameForBuh = Console.ReadLine();
-            Converter.Ser<List<Accounting>>(buh, filenameForBuh);
+            
+            Converter.Ser<List<Accounting>>(con1, json);
 
             selledProducts.Clear();
 

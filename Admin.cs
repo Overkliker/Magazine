@@ -21,6 +21,7 @@ namespace Magazine
             Enter = ConsoleKey.Enter,
             UpArrow = ConsoleKey.UpArrow,
             DownArrow = ConsoleKey.DownArrow,
+            Esc = ConsoleKey.Escape
 
         }
         public Admin(ModelOfWorker worker, List<UserTable> allUsers)
@@ -98,6 +99,11 @@ namespace Magazine
                     Console.Clear();
                     UserTable user = allUsers[pose - 2];
                     Update(user.id);
+                }
+                else if (key.Key == (ConsoleKey)Post.Esc)
+                {
+                    Console.Clear();
+                    break;
                 }
 
              

@@ -20,7 +20,7 @@ namespace Magazine
             Enter = ConsoleKey.Enter,
             UpArrow = ConsoleKey.UpArrow,
             DownArrow = ConsoleKey.DownArrow,
-
+            Esc = ConsoleKey.Escape
         }
         public Accountant(ModelOfWorker worker, List<Accounting> allBuh)
         {
@@ -33,6 +33,12 @@ namespace Magazine
             int max = allBuh.Count() + 1;
             while (true)
             {
+                //Усечение строки до файла с юзерами
+                string startupPath = Directory.GetCurrentDirectory();
+                int len1 = startupPath.Length - 17;
+                string json = startupPath.Substring(0, len1) + "\\Accounting.json";
+                List<Accounting> con = Converter.Des<List<Accounting>>(json);
+                max = con.Count + 1;
                 Console.Clear();
                 Console.WriteLine(pose);
                 Console.SetCursorPosition(0, pose);
@@ -86,6 +92,11 @@ namespace Magazine
                     }
 
                 }
+                else if (key.Key == (ConsoleKey)Post.Esc)
+                {
+                    Console.Clear();
+                    break;
+                }
             }
         }
         public void Create()
@@ -112,9 +123,7 @@ namespace Magazine
 
             con.Add(newAcc);
 
-            Console.WriteLine("Введите название файла");
-            string filename = Console.ReadLine();
-            Converter.Ser<List<Accounting>>(con, filename);
+            Converter.Ser<List<Accounting>>(con, json);
         }
 
         public void Delete()
@@ -131,9 +140,7 @@ namespace Magazine
                 if (acc.id == id)
                 {
                     con.Remove(acc);
-                    Console.WriteLine("Введите название файла");
-                    string filename = Console.ReadLine();
-                    Converter.Ser<List<Accounting>>(con, filename);
+                    Converter.Ser<List<Accounting>>(con, json);
                     break;
                 }
             }
@@ -213,10 +220,7 @@ namespace Magazine
                     vrem.name = name;
                     vrem.sumPrice = sumPrice;
                     vrem.pribavka = pribavka;
-
-                    Console.WriteLine("Введите название файла");
-                    string filename = Console.ReadLine();
-                    Converter.Ser<List<Accounting>>(con, filename);
+                    Converter.Ser<List<Accounting>>(con, json);
 
                     break;
                 }
