@@ -114,5 +114,39 @@ namespace Magazine
                 Console.WriteLine($"{con[i - 2].count}");
             }
         }
+
+        public static void AccountingPrint()
+        {
+            string startupPath = Directory.GetCurrentDirectory();
+            int len = startupPath.Length - 17;
+            string json = startupPath.Substring(0, len) + "\\Accounting.json";
+            List<Accounting> con = Converter.Des<List<Accounting>>(json);
+            //Вывод бухгалтерии этой говёной системы
+            int allSum = 0;
+            for (int i = 2; i < con.Count + 2; i++)
+            {
+
+                Console.SetCursorPosition(5, i);
+                Console.WriteLine($"ID {con[i - 2].id}");
+                Console.SetCursorPosition(15, i);
+                Console.WriteLine($"Name {con[i - 2].name}");
+                Console.SetCursorPosition(35, i);
+                Console.WriteLine($"Price {con[i - 2].sumPrice}");
+                Console.SetCursorPosition(60, i);
+                Console.WriteLine($"{con[i - 2].pribavka}");
+
+                if (con[i - 2].pribavka == 1)
+                {
+                    allSum += con[i - 2].sumPrice;
+                }
+                else if (con[i - 2].pribavka == 0)
+                {
+                    allSum -= con[i - 2].sumPrice;
+                }
+            }
+
+            Console.WriteLine($"Общая сумма выручки: {allSum}");
+
+        }
     }
 }

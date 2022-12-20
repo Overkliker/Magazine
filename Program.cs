@@ -59,6 +59,14 @@ namespace Magazine
                     List<Product> productsSeller = Converter.Des<List<Product>>(jsonProdSeller);
                     Seller seller = new Seller(worker, productsSeller);
                     break;
+                case 5:
+                    Console.Clear();
+                    string allPathForAccountant = Directory.GetCurrentDirectory();
+                    int lenAcc = startupPath.Length - 17;
+                    string jsonAcc = startupPath.Substring(0, lenAcc) + "\\Accounting.json";
+                    List<Accounting> accounting = Converter.Des<List<Accounting>>(jsonAcc);
+                    Accountant accountant = new Accountant(worker, accounting);
+                    break;
             }
 
         }
