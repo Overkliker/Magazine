@@ -61,6 +61,7 @@ namespace Magazine
                     case 2:
                         Console.Clear();
                         Manager manager = new Manager(worker, con);
+                        manager.Inteface();
                         break;
                     case 3:
                         Console.Clear();
@@ -69,6 +70,7 @@ namespace Magazine
                         string jsonProd = startupPath.Substring(0, lenProd) + "\\Product.json";
                         List<Product> products = Converter.Des<List<Product>>(jsonProd);
                         WarehouseManager warehouseManager = new WarehouseManager(worker, products);
+                        warehouseManager.Interface();
                         break;
                     case 4:
                         Console.Clear();
@@ -77,6 +79,7 @@ namespace Magazine
                         string jsonProdSeller = startupPath.Substring(0, lenProdSeller) + "\\Product.json";
                         List<Product> productsSeller = Converter.Des<List<Product>>(jsonProdSeller);
                         Seller seller = new Seller(worker, productsSeller);
+                        seller.Interface();
                         break;
                     case 5:
                         Console.Clear();
@@ -85,6 +88,7 @@ namespace Magazine
                         string jsonAcc = startupPath.Substring(0, lenAcc) + "\\Accounting.json";
                         List<Accounting> accounting = Converter.Des<List<Accounting>>(jsonAcc);
                         Accountant accountant = new Accountant(worker, accounting);
+                        accountant.Interface();
                         break;
                 }
             }

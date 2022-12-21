@@ -92,6 +92,11 @@ namespace Magazine
                     }
 
                 }
+                else if (key.Key == (ConsoleKey)Post.Enter)
+                {
+                    Console.Clear();
+                    Update(pose);
+                }
             }
         }
         public void Create()

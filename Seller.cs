@@ -82,6 +82,7 @@ namespace Magazine
                 {
                     Save();
                 }
+
                 else if (key.Key == (ConsoleKey)Post.Esc)
                 {
                     Console.Clear();

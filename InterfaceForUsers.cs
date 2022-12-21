@@ -8,14 +8,15 @@ namespace Magazine
 {
     public class InterfaceForUsers
     {
-        public static string[] roles = new string[] { "Admin", "Manager", "Warehouse Manager", "Seller"};
+        public static string[] roles = new string[] { "Admin", "Manager", "Warehouse Manager", "Seller", "Accountant"};
         public static void PrintInterface(ModelOfWorker user)
         {
             //Здесь делается интерфейс для админа
+            Console.WriteLine(user.atribute);
             Console.SetCursorPosition(50, 0);
             Console.WriteLine($"Добро пожаловать, {user.name}");
             Console.SetCursorPosition(85, 0);
-            Console.WriteLine($"Роль: {roles[user.atribute]}");
+            Console.WriteLine($"Роль: {roles[user.atribute - 1]}");
             Console.WriteLine("______________________________________________________________________________________________________________________________________________");
             if (user.atribute == 1)
             {
